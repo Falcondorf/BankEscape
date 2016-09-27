@@ -6,5 +6,13 @@ package bankescape;
  * @author jackd
  */
 public class Pickable extends Square{
-    String name;
+    String type;
+
+    public Pickable(String type) {
+        super(type);
+    }
+
+    
+    
+    
 }
