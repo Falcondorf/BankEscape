@@ -10,13 +10,14 @@ import java.util.ArrayList;
 public class Maze {
     Square[][] maze;
     Player player;
-    ArrayList enemyList= new ArrayList<Enemy>(); 
+    ArrayList<Enemy> enemyList; 
 
     public Maze(int sizeRow, int sizeColumn) {
+        this.enemyList = new ArrayList<>();
         maze = new Square[sizeRow][sizeColumn];
         for (int i = 0; i < sizeRow; i++) {
             for (int j = 0; j < sizeColumn; j++) {
-                Square s = new Square("floor");
+                Square s = new Square();
                 maze[i][j] = s;
             }
         }
