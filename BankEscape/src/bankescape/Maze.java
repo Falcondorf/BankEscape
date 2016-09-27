@@ -1,4 +1,3 @@
-
 package bankescape;
 
 import java.util.ArrayList;
@@ -8,9 +7,10 @@ import java.util.ArrayList;
  * @author jackd
  */
 public class Maze {
+
     Square[][] maze;
     Player player;
-    ArrayList<Enemy> enemyList; 
+    ArrayList<Enemy> enemyList;
 
     public Maze(int sizeRow, int sizeColumn) {
         this.enemyList = new ArrayList<>();
@@ -22,25 +22,88 @@ public class Maze {
             }
         }
     }
-    
-    public void move (Direction dir){
-        switch (dir){
+
+    public void move(Direction dir) {
+        if (moveAutorised(dir)) {
+            this.removePlayer(player.getRow(), player.getColumn());
+            switch (dir) {
+                case UP:
+                    displacePlayer(-1, 0, Direction.UP);
+                    break;
+                case DOWN:
+                    displacePlayer(1, 0, Direction.DOWN);
+                    break;
+                case LEFT:
+                    displacePlayer(0, -1, Direction.LEFT);
+                    break;
+                case RIGHT:
+                    displacePlayer(0, 1, Direction.RIGHT);
+                    break;
+            }
+        }
+
+    }
+
+    private void displacePlayer(int decRow, int decColumn, Direction dir) {
+        player.move(dir);     //deplace objet joueur
+        this.putPlayer(player.getRow() + decRow, player.getColumn() + decColumn);  //place booléen joueur
+    }
+
+    public boolean moveAutorised(Direction dir) { //condition de sortie + est ce qu il y a un mur ?
+        switch (dir) {
             case UP:
-                player.move(Direction.UP);
-                break;
-            case DOWN: 
-                player.move(Direction.DOWN);
-                break;
+                return player.getRow() != 0 && maze[player.getRow() - 1][player.getColumn()].isReachable();
+            case DOWN:
+                return player.getRow() != maze.length && maze[player.getRow() + 1][player.getColumn()].isReachable();
             case LEFT:
-                player.move(Direction.LEFT);
-                break;
-            case RIGHT: 
-                player.move(Direction.RIGHT);
-                break;
+                return player.getColumn() != 0 && maze[player.getRow()][player.getColumn() - 1].isReachable();
+            case RIGHT:
+                return player.getColumn() != maze[0].length && maze[player.getRow()][player.getColumn() + 1].isReachable();
+            default:
+                return false;
         }
     }
-    
-    public boolean isValid(){
+
+    public void addWall(int row, int column) {
+        maze[row][column].setWall();
+    }
+
+    public void addVault(int row, int column) {
+        maze[row][column].setVault();
+    }
+
+    public void addEntry(int row, int column) {
+        maze[row][column].setEntry();
+    }
+
+    public void addExit(int row, int column) {
+        maze[row][column].setExit();
+    }
+
+    public void addPlayer(int row, int column) {   //1 seule fois a l'initialisation du jeu
+        Player play = new Player(new Position(row, column));
+        maze[row][column].setHasPlayer();
+        player = play;
+    }
+
+    public void putPlayer(int row, int column) {  //a chaque fois qu on bouge
+        maze[row][column].setHasPlayer();
+    }
+
+    public void removePlayer(int row, int column) {
+        maze[row][column].removePlayer();
+    }
+
+    public void removeElement(int row, int column) {
+        maze[row][column].setFloor();
+    }
+
+    public boolean isValid() {
         return false; //todo
     }
+
+    public Player getPlayer() {
+        return player;
+    }
+
 }
