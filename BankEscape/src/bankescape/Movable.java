@@ -7,4 +7,5 @@ package bankescape;
  */
 public abstract class Movable extends Square{
     
+    abstract void move ();
 }

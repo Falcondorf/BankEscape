@@ -7,4 +7,7 @@ package bankescape;
  */
 public class Player extends Movable {
     
+    public void move(){
+        
+    }
 }

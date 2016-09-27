@@ -6,12 +6,29 @@ package bankescape;
  * @author jackd
  */
 public class Placeble extends Square{
-    boolean isWall;
-    boolean isVault;
-    boolean isFloor;
-    boolean isEntry;
-    boolean isExit;
+    private boolean isWall;
+    private boolean isVault;
+    private boolean isFloor;
+    private boolean isEntry;
+    private boolean isExit;
     
-    //todo getter et setter
+    public boolean getIsWall (){
+        return this.isWall;
+    }
     
+    public boolean getIsVault (){
+        return this.isVault;
+    }
+    
+    public boolean getIsFloor(){
+        return this.isFloor;
+    }
+    
+    public boolean getIsEntry(){
+        return this.isEntry;
+    }
+    
+    public boolean getIsExit(){
+        return this.isExit;
+    }
 }

@@ -7,4 +7,7 @@ package bankescape;
  */
 public class Enemy extends Movable{
     
+    public void move(){
+        
+    }
 }
