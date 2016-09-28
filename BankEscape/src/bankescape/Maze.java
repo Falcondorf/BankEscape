@@ -44,6 +44,15 @@ public class Maze {
 
     }
 
+    public void autoMoveEnemy(Direction dir) {
+        for (Enemy e : enemyList) {
+            removeEnemy(e.getRow(), e.getColumn());
+            switch (movementAnalysis(e)) {
+
+            }
+        }
+    }
+
     private void displacePlayer(int decRow, int decColumn, Direction dir) {
         player.move(dir);     //deplace objet joueur
         this.putPlayer(player.getRow() + decRow, player.getColumn() + decColumn);  //place booléen joueur
@@ -54,11 +63,11 @@ public class Maze {
             case UP:
                 return player.getRow() != 0 && maze[player.getRow() - 1][player.getColumn()].isReachable();
             case DOWN:
-                return player.getRow() != maze.length-1 && maze[player.getRow() + 1][player.getColumn()].isReachable();
+                return player.getRow() != maze.length - 1 && maze[player.getRow() + 1][player.getColumn()].isReachable();
             case LEFT:
                 return player.getColumn() != 0 && maze[player.getRow()][player.getColumn() - 1].isReachable();
             case RIGHT:
-                return player.getColumn() != maze[0].length-1 && maze[player.getRow()][player.getColumn() + 1].isReachable();
+                return player.getColumn() != maze[0].length - 1 && maze[player.getRow()][player.getColumn() + 1].isReachable();
             default:
                 return false;
         }
@@ -94,6 +103,19 @@ public class Maze {
         maze[row][column].removePlayer();
     }
 
+    public void addEnemy(Direction dir, int row, int column) {   //x fois a l'initialisation du jeu
+        maze[row][column].setHasEnemy();
+        enemyList.add(new Enemy(dir, new Position(row, column)));
+    }
+
+    public void putEnemy(int row, int column) {
+        maze[row][column].setHasEnemy();
+    }
+
+    public void removeEnemy(int row, int column) {
+        maze[row][column].removeEnemy();
+    }
+
     public void removeElement(int row, int column) {
         maze[row][column].setFloor();
     }
@@ -104,6 +126,39 @@ public class Maze {
 
     public Player getPlayer() {
         return player;
+    }
+
+    private Direction movementAnalysis(Enemy e) {
+        //evalue si mur devant la direction suivie .V.
+        
+        e.resetPossibleDirection();
+        if (maze[e.getRow() - 1][e.getColumn()].isReachable()) {
+            e.addPossibleDirection(Direction.UP);
+        }
+        if (maze[e.getRow() + 1][e.getColumn()].isReachable()) {
+            e.addPossibleDirection(Direction.DOWN);
+        }
+        if (maze[e.getRow()][e.getColumn() + 1].isReachable()) {
+            e.addPossibleDirection(Direction.RIGHT);
+        }
+        if (maze[e.getRow()][e.getColumn() - 1].isReachable()) {
+            e.addPossibleDirection(Direction.LEFT);
+        }
+        switch (e.getDirection()) {
+            case UP:
+                if (!maze[e.getRow()-1][e.getColumn()].isReachable()){
+                    //choisir une direction possible au hasard
+                }
+                break;
+            case DOWN:
+                break;
+            case LEFT:
+                break;
+            case RIGHT:
+                break;
+
+        }
+
     }
 
 }

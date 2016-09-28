@@ -6,10 +6,6 @@
 
 import bankescape.Direction;
 import bankescape.Maze;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -31,6 +27,7 @@ public class TestModel {
                 mazeTest.removePlayer(0, 0);
                 mazeTest.addPlayer(4,4);
                 mazeTest.movePlayer(Direction.DOWN);
+                assertEquals(4,mazeTest.getPlayer().getRow());   
                 System.out.println("le joueur ne peut pas sortir du tableau au Sud, ligne reste à 4 : "+mazeTest.getPlayer().getColumn());
                 assertEquals( 4, mazeTest.getPlayer().getRow());
                 mazeTest.movePlayer(Direction.RIGHT);
