@@ -23,7 +23,7 @@ public class Maze {
         }
     }
 
-    public void move(Direction dir) {
+    public void movePlayer(Direction dir) {
         if (moveAutorised(dir)) {
             this.removePlayer(player.getRow(), player.getColumn());
             switch (dir) {
@@ -49,16 +49,16 @@ public class Maze {
         this.putPlayer(player.getRow() + decRow, player.getColumn() + decColumn);  //place booléen joueur
     }
 
-    public boolean moveAutorised(Direction dir) { //condition de sortie + est ce qu il y a un mur ?
+    private boolean moveAutorised(Direction dir) { //condition de sortie + est ce qu il y a un mur ?
         switch (dir) {
             case UP:
                 return player.getRow() != 0 && maze[player.getRow() - 1][player.getColumn()].isReachable();
             case DOWN:
-                return player.getRow() != maze.length && maze[player.getRow() + 1][player.getColumn()].isReachable();
+                return player.getRow() != maze.length-1 && maze[player.getRow() + 1][player.getColumn()].isReachable();
             case LEFT:
                 return player.getColumn() != 0 && maze[player.getRow()][player.getColumn() - 1].isReachable();
             case RIGHT:
-                return player.getColumn() != maze[0].length && maze[player.getRow()][player.getColumn() + 1].isReachable();
+                return player.getColumn() != maze[0].length-1 && maze[player.getRow()][player.getColumn() + 1].isReachable();
             default:
                 return false;
         }
