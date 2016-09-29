@@ -1,6 +1,7 @@
 package bankescape;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -130,7 +131,7 @@ public class Maze {
 
     private Direction movementAnalysis(Enemy e) {
         //evalue si mur devant la direction suivie .V.
-        
+
         e.resetPossibleDirection();
         if (maze[e.getRow() - 1][e.getColumn()].isReachable()) {
             e.addPossibleDirection(Direction.UP);
@@ -144,19 +145,43 @@ public class Maze {
         if (maze[e.getRow()][e.getColumn() - 1].isReachable()) {
             e.addPossibleDirection(Direction.LEFT);
         }
-        switch (e.getDirection()) {
-            case UP:
-                if (!maze[e.getRow()-1][e.getColumn()].isReachable()){
-                    //choisir une direction possible au hasard
-                }
-                break;
-            case DOWN:
-                break;
-            case LEFT:
-                break;
-            case RIGHT:
-                break;
 
+        //si + de 2 direction possible random
+        if (e.getPossibleDirection().size() > 2) {
+            Random rand = new Random();
+            int iRand = rand.nextInt();
+        } else { //soit un mur soit couloir
+            switch (e.getDirection()) {
+                case UP:
+                    if (!maze[e.getRow() - 1][e.getColumn()].isReachable()) {
+                        //choisir une direction possible au hasard
+                    } else { //continuer dans meme direction
+                        return Direction.UP;
+                    }
+                    break;
+                case DOWN:
+                     if (!maze[e.getRow() + 1][e.getColumn()].isReachable()) {
+                        //choisir une direction possible au hasard
+                    } else { //continuer dans meme direction
+                        return Direction.DOWN;
+                    }
+                    break;
+                case LEFT:
+                     if (!maze[e.getRow()][e.getColumn()-1].isReachable()) {
+                        //choisir une direction possible au hasard
+                    } else { //continuer dans meme direction
+                        return Direction.LEFT;
+                    }
+                    break;
+                case RIGHT:
+                     if (!maze[e.getRow()][e.getColumn()+1].isReachable()) {
+                        //choisir une direction possible au hasard
+                    } else { //continuer dans meme direction
+                        return Direction.RIGHT;
+                    }
+                    break;
+
+            }
         }
 
     }
