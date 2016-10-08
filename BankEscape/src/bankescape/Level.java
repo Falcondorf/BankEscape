@@ -39,14 +39,12 @@ public class Level {
             nb2+=(char)r;
         }
 
-        this.maze = new Maze(Integer.parseInt(nb1),Integer.parseInt(nb2));
-        
-        
+        this.maze = new Maze(Integer.parseInt(nb1)+1,Integer.parseInt(nb2)+1);      
+        r = br.read();
         while ((r = br.read()) != -1) {
             char ch = (char) r;
-            switch (ch) {
-                case ' ':
-                    
+            switch (ch) { 
+                case ' ':                   
                     break;
                 case 'P':
                    // new Player(new Position(row, col))
@@ -80,7 +78,10 @@ public class Level {
                     col = 0;
                     break;
             }
-            col++;
+            if(col!=Integer.parseInt(nb2)){
+                col++;
+            }
+            
         }
     }
     

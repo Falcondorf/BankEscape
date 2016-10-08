@@ -26,25 +26,39 @@ public class Maze {
         }
     }
 
+    
     public void movePlayer(Direction dir) {
         if (moveAutorised(dir)) {
             this.removePlayer(player.getRow(), player.getColumn());
             switch (dir) {
                 case UP:
                     displacePlayer(-1, 0, Direction.UP);
+                    pickSomething();
                     break;
                 case DOWN:
                     displacePlayer(1, 0, Direction.DOWN);
+                    pickSomething();
                     break;
                 case LEFT:
                     displacePlayer(0, -1, Direction.LEFT);
+                    pickSomething();
                     break;
                 case RIGHT:
                     displacePlayer(0, 1, Direction.RIGHT);
+                    pickSomething();
                     break;
             }
         }
 
+    }
+
+    private void pickSomething() {
+        if(maze[player.getRow()][player.getColumn()].hasKey()){
+            player.setHasKey(true);
+        }
+        if(maze[player.getRow()][player.getColumn()].hasDrill()){
+            player.setHasDrill(true);
+        }
     }
 
     public void autoMoveEnemy() {
@@ -166,16 +180,16 @@ public class Maze {
         //evalue si mur devant la direction suivie .V.
 
         e.resetPossibleDirection();
-        if (maze[e.getRow() - 1][e.getColumn()].isReachable(player.hasKey(), player.hasDrill())) {
+        if (maze[e.getRow() - 1][e.getColumn()].isReachable(false,false)) {
             e.addPossibleDirection(Direction.UP);
         }
-        if (maze[e.getRow() + 1][e.getColumn()].isReachable(player.hasKey(), player.hasDrill())) {
+        if (maze[e.getRow() + 1][e.getColumn()].isReachable(false,false)) {
             e.addPossibleDirection(Direction.DOWN);
         }
-        if (maze[e.getRow()][e.getColumn() + 1].isReachable(player.hasKey(), player.hasDrill())) {
+        if (maze[e.getRow()][e.getColumn() + 1].isReachable(false,false)) {
             e.addPossibleDirection(Direction.RIGHT);
         }
-        if (maze[e.getRow()][e.getColumn() - 1].isReachable(player.hasKey(), player.hasDrill())) {
+        if (maze[e.getRow()][e.getColumn() - 1].isReachable(false,false)) {
             e.addPossibleDirection(Direction.LEFT);
         }
 
@@ -200,7 +214,7 @@ public class Maze {
     }
 
     private Direction movementDecision(Enemy e, Direction dir, int decalRow, int decalCol) {
-        if (!maze[e.getRow() + decalRow][e.getColumn() + decalCol].isReachable(player.hasKey(), player.hasDrill())) {
+        if (!maze[e.getRow() + decalRow][e.getColumn() + decalCol].isReachable(false,false)) {
             //choisir une direction possible au hasard
             return e.randDir();
         } else { //continuer dans meme direction
@@ -234,7 +248,11 @@ public class Maze {
                         }
                         break;
                     case "entry":
-                        str += "I";
+                        if (maze[i][j].hasPlayer()) {
+                            str += "P"; 
+                        }else{
+                            str += "I";
+                        }                       
                         break;
                     case "vault":
                         str += "V";

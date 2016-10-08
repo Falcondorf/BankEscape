@@ -87,7 +87,8 @@ public class Square {
     public boolean isReachable(boolean hasKey,boolean hasDrill) { //A compléter avec le vault et l'exit fermé
         return (hasDrill && type.equals("vault")) 
                 || (hasKey && type.equals("exit")) 
-                || (!type.equals("wall"));
+                || (type.equals("floor"))
+                || (type.equals("entry"));
     }
 
     public String getType() {
