@@ -2,6 +2,8 @@ package bankescape;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -45,11 +47,30 @@ public class Maze {
 
     }
 
-    public void autoMoveEnemy(Direction dir) {
+    public void autoMoveEnemy() {
         for (Enemy e : enemyList) {
             removeEnemy(e.getRow(), e.getColumn());
-            switch (movementAnalysis(e)) {
-
+            try {
+                switch (movementAnalysis(e)) {
+                    case UP:
+                        e.move(Direction.UP);
+                        this.putEnemy(e.getRow() - 1, e.getColumn());
+                        break;
+                    case DOWN:
+                        e.move(Direction.DOWN);
+                        this.putEnemy(e.getRow() + 1, e.getColumn());
+                        break;
+                    case LEFT:
+                        e.move(Direction.LEFT);
+                        this.putEnemy(e.getRow(), e.getColumn() - 1);
+                        break;
+                    case RIGHT:
+                        e.move(Direction.RIGHT);
+                        this.putEnemy(e.getRow(), e.getColumn() + 1);
+                        break;
+                }
+            } catch (Exception ex) {
+                System.out.println(ex);
             }
         }
     }
@@ -62,13 +83,17 @@ public class Maze {
     private boolean moveAutorised(Direction dir) { //condition de sortie + est ce qu il y a un mur ?
         switch (dir) {
             case UP:
-                return player.getRow() != 0 && maze[player.getRow() - 1][player.getColumn()].isReachable();
+                return player.getRow() != 0
+                        && maze[player.getRow() - 1][player.getColumn()].isReachable(player.hasKey(), player.hasDrill());
             case DOWN:
-                return player.getRow() != maze.length - 1 && maze[player.getRow() + 1][player.getColumn()].isReachable();
+                return player.getRow() != maze.length - 1
+                        && maze[player.getRow() + 1][player.getColumn()].isReachable(player.hasKey(), player.hasDrill());
             case LEFT:
-                return player.getColumn() != 0 && maze[player.getRow()][player.getColumn() - 1].isReachable();
+                return player.getColumn() != 0
+                        && maze[player.getRow()][player.getColumn() - 1].isReachable(player.hasKey(), player.hasDrill());
             case RIGHT:
-                return player.getColumn() != maze[0].length - 1 && maze[player.getRow()][player.getColumn() + 1].isReachable();
+                return player.getColumn() != maze[0].length - 1
+                        && maze[player.getRow()][player.getColumn() + 1].isReachable(player.hasKey(), player.hasDrill());
             default:
                 return false;
         }
@@ -113,6 +138,14 @@ public class Maze {
         maze[row][column].setHasEnemy();
     }
 
+    public void putDrill(int row, int column) {
+        maze[row][column].setHasDrill();
+    }
+
+    public void putKey(int row, int column) {
+        maze[row][column].setHasKey();
+    }
+
     public void removeEnemy(int row, int column) {
         maze[row][column].removeEnemy();
     }
@@ -129,61 +162,89 @@ public class Maze {
         return player;
     }
 
-    private Direction movementAnalysis(Enemy e) {
+    private Direction movementAnalysis(Enemy e) throws Exception {
         //evalue si mur devant la direction suivie .V.
 
         e.resetPossibleDirection();
-        if (maze[e.getRow() - 1][e.getColumn()].isReachable()) {
+        if (maze[e.getRow() - 1][e.getColumn()].isReachable(player.hasKey(), player.hasDrill())) {
             e.addPossibleDirection(Direction.UP);
         }
-        if (maze[e.getRow() + 1][e.getColumn()].isReachable()) {
+        if (maze[e.getRow() + 1][e.getColumn()].isReachable(player.hasKey(), player.hasDrill())) {
             e.addPossibleDirection(Direction.DOWN);
         }
-        if (maze[e.getRow()][e.getColumn() + 1].isReachable()) {
+        if (maze[e.getRow()][e.getColumn() + 1].isReachable(player.hasKey(), player.hasDrill())) {
             e.addPossibleDirection(Direction.RIGHT);
         }
-        if (maze[e.getRow()][e.getColumn() - 1].isReachable()) {
+        if (maze[e.getRow()][e.getColumn() - 1].isReachable(player.hasKey(), player.hasDrill())) {
             e.addPossibleDirection(Direction.LEFT);
         }
 
         //si + de 2 direction possible random
-        if (e.getPossibleDirection().size() > 2) {
-            Random rand = new Random();
-            int iRand = rand.nextInt();
+        if (e.getNumberDirections() > 2) {
+            return e.randDir();
         } else { //soit un mur soit couloir
             switch (e.getDirection()) {
                 case UP:
-                    if (!maze[e.getRow() - 1][e.getColumn()].isReachable()) {
-                        //choisir une direction possible au hasard
-                    } else { //continuer dans meme direction
-                        return Direction.UP;
-                    }
-                    break;
+                    return movementDecision(e, Direction.UP, -1, 0);
                 case DOWN:
-                     if (!maze[e.getRow() + 1][e.getColumn()].isReachable()) {
-                        //choisir une direction possible au hasard
-                    } else { //continuer dans meme direction
-                        return Direction.DOWN;
-                    }
-                    break;
+                    return movementDecision(e, Direction.DOWN, 1, 0);
                 case LEFT:
-                     if (!maze[e.getRow()][e.getColumn()-1].isReachable()) {
-                        //choisir une direction possible au hasard
-                    } else { //continuer dans meme direction
-                        return Direction.LEFT;
-                    }
-                    break;
+                    return movementDecision(e, Direction.LEFT, 0, -1);
                 case RIGHT:
-                     if (!maze[e.getRow()][e.getColumn()+1].isReachable()) {
-                        //choisir une direction possible au hasard
-                    } else { //continuer dans meme direction
-                        return Direction.RIGHT;
-                    }
-                    break;
-
+                    return movementDecision(e, Direction.RIGHT, 0, 1);
+                default:
+                    throw new Exception();
             }
         }
 
     }
 
+    private Direction movementDecision(Enemy e, Direction dir, int decalRow, int decalCol) {
+        if (!maze[e.getRow() + decalRow][e.getColumn() + decalCol].isReachable(player.hasKey(), player.hasDrill())) {
+            //choisir une direction possible au hasard
+            return e.randDir();
+        } else { //continuer dans meme direction
+            return dir;
+        }
+    }
+
+    @Override
+    public String toString() {
+        String str = "";
+        for (int i = 0; i < maze.length; i++) {
+            for (int j = 0; j < maze[0].length; j++) {
+                switch (maze[i][j].getType()) {
+                    case "wall":
+                        str += "W";
+                        break;
+                    case "exit":
+                        str += "S";
+                        break;
+                    case "floor":
+                        if (maze[i][j].hasDrill()) {
+                            str += "D";
+                        } else if (maze[i][j].hasEnemy()) {
+                            str += "E";
+                        } else if (maze[i][j].hasKey()) {
+                            str += "K";
+                        } else if (maze[i][j].hasPlayer()) {
+                            str += "P";
+                        } else {
+                            str += " ";
+                        }
+                        break;
+                    case "entry":
+                        str += "I";
+                        break;
+                    case "vault":
+                        str += "V";
+                        break;
+
+                }
+
+            }
+            str += "\n";
+        }
+        return str;
+    }
 }

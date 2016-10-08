@@ -1,7 +1,10 @@
 
 package bankescape;
 
+
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -11,7 +14,7 @@ public class Enemy extends Movable{
     
     private boolean inAlert =false;
     private Direction direction;
-    private ArrayList<Direction> possibleDirection;
+    private List<Direction> possibleDirection;
 
     public Enemy(Direction direction,Position pos) {
         super(pos);
@@ -35,8 +38,8 @@ public class Enemy extends Movable{
         this.direction = direction;
     }
 
-    public ArrayList<Direction> getPossibleDirection() {
-        return possibleDirection;
+    public int getNumberDirections() {
+        return possibleDirection.size();
     }
 
     public void addPossibleDirection(Direction dir) {
@@ -45,5 +48,11 @@ public class Enemy extends Movable{
     
     public void resetPossibleDirection(){
         possibleDirection.clear();
+    }
+    
+    public Direction randDir(){
+        Random rand = new Random();
+        int i = rand.nextInt(getNumberDirections());
+        return possibleDirection.get(i);
     }
 }

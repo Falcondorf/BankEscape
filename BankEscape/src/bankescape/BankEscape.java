@@ -1,6 +1,9 @@
 
 package bankescape;
 
+import java.io.IOException;
+import java.util.logging.Logger;
+
 /**
  *
  * @author jackd
@@ -21,6 +24,17 @@ public class BankEscape {
        maze.addWall(1, 0); //ajout d un mur en dessou
        maze.movePlayer(Direction.DOWN);
        System.out.println("ligne joueur : "+maze.getPlayer().getRow());
+        try {
+            Level leLevel = new Level(1);
+            System.out.println(leLevel.getMaze().toString());
+            leLevel.getMaze().autoMoveEnemy();
+            leLevel.getMaze().movePlayer(Direction.DOWN);
+            
+            System.out.println(leLevel.getMaze().toString());
+        } catch (IOException ex) {
+            System.out.println("wrong file");
+        }
+        
     }
     
 }

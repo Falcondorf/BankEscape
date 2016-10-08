@@ -8,6 +8,7 @@ package bankescape;
 public class Player extends Movable {
     private boolean hasMoney =false;
     private boolean hasDrill = false;
+    private boolean hasKey = false;
     private boolean isCaught = false;
 
     public Player( Position pos) {
@@ -15,11 +16,20 @@ public class Player extends Movable {
             
     }
 
+    public boolean hasKey() {
+        return hasKey;
+    }
+
+    public void setHasKey(boolean hasKey) {
+        this.hasKey = hasKey;
+    }
+
   
     public boolean hasMoney() {
         return hasMoney;
     }
 
+   
     public void setHasMoney(boolean hasMoney) {
         this.hasMoney = hasMoney;
     }

@@ -7,7 +7,6 @@ package bankescape;
 public class Square {
 
     private String type;
-    
     private boolean hasPlayer;
     private boolean hasEnemy;
     private boolean hasDrill;
@@ -16,11 +15,12 @@ public class Square {
     
     
     public Square() { //Floor, Wall, Vault, Entry, Exit. ==> Un vault 
-        this.type = "Floor";        //et une exit fermée ne sont pas reachable.
+        this.type = "floor";        //et une exit fermée ne sont pas reachable.
         this.hasPlayer = false;
         this.hasDrill = false;
         this.hasEnemy = false;
         this.hasKey = false;
+        
     }
     
     
@@ -84,8 +84,10 @@ public class Square {
     }
 
 
-    public boolean isReachable() { //A compléter avec le vault et l'exit fermé
-        return !type.equals("wall");
+    public boolean isReachable(boolean hasKey,boolean hasDrill) { //A compléter avec le vault et l'exit fermé
+        return (hasDrill && type.equals("vault")) 
+                || (hasKey && type.equals("exit")) 
+                || (!type.equals("wall"));
     }
 
     public String getType() {
