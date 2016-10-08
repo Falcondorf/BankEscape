@@ -22,6 +22,12 @@ public class Level {
         return maze;
     }
     
+    public boolean isOver(){
+//        TODO condition de fin de partie / pour simplier au début ouvrir le vault termine le jeu
+        
+        return this.maze.playerOnVault();
+    }
+    
     private void readLevel(int levelNum) throws IOException {
         //Scanner lect = new Scanner(new File("/src/LoadRunner/Niveaux/Level"
         //       + levelNum + ".txt"));

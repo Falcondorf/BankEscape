@@ -1,9 +1,6 @@
 package bankescape;
 
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -220,6 +217,10 @@ public class Maze {
         } else { //continuer dans meme direction
             return dir;
         }
+    }
+    
+    public boolean playerOnVault(){
+        return this.maze[this.player.getRow()][this.player.getColumn()].getType().equals("vault");
     }
 
     @Override
