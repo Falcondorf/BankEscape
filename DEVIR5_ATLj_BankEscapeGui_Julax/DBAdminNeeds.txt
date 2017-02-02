@@ -1,0 +1,25 @@
+[DONE]
+select all players
+select one player on selected criteria
+select a player by name
+insert player
+delete player
+
+select all Levels
+select Levels on selected criteria
+select Level by name
+insert Level
+update Level
+delete Level
+
+select all levelElems
+select levelElement on selected criteria
+select LevelElement by position in level
+insert LevelElement
+update LevelElement
+delete LevelElement
+
+[TODO]
+
+NaN
+

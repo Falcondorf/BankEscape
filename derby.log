@@ -1,0 +1,38 @@
+Tue Dec 13 23:22:53 CET 2016 : Apache Derby Network Server - 10.11.1.2 - (1629631) démarré et prêt à accepter les connexions sur le port 1527
+----------------------------------------------------------------
+Tue Dec 13 23:22:53 CET 2016:
+Amorçage de Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631) : instance a816c00e-0158-fa47-f00d-00000d99467b 
+dans le répertoire de base de données D:\NetBeansProjects\DEVIR5_ATLj_BankEscapeGUI_Julax\BankEscapeDB avec le chargeur de classe sun.misc.Launcher$AppClassLoader@1d44bcfa
+Chargé de file:/D:/jdk/db/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_101-b13
+user.dir=D:\jdk\db
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=D:\NetBeansProjects\DEVIR5_ATLj_BankEscapeGUI_Julax
+Chargeur de classe de la base de données démarré - derby.database.classpath = ''
+----------------------------------------------------------------
+Tue Dec 13 23:23:02 CET 2016:
+Fermeture de l'instance a816c00e-0158-fa47-f00d-00000d99467b sur le répertoire de base de données D:\NetBeansProjects\DEVIR5_ATLj_BankEscapeGUI_Julax\BankEscapeDB avec le chargeur de classe sun.misc.Launcher$AppClassLoader@1d44bcfa 
+Tue Dec 13 23:23:02 CET 2016 Thread[DRDAConnThread_2,5,main] (DATABASE = BankEscapeDB), (DRDAID = {2}), Arrêt de la base de données 'BankEscapeDB'.
+----------------------------------------------------------------
+Tue Dec 13 23:23:11 CET 2016:
+Amorçage de Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631) : instance a65c80ac-0158-fa47-f00d-00000d99467b 
+dans le répertoire de base de données D:\NetBeansProjects\DEVIR5_ATLj_BankEscapeGUI_Julax\BankEscapeDB avec le chargeur de classe sun.misc.Launcher$AppClassLoader@1d44bcfa
+Chargé de file:/D:/jdk/db/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_101-b13
+user.dir=D:\jdk\db
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=D:\NetBeansProjects\DEVIR5_ATLj_BankEscapeGUI_Julax
+Chargeur de classe de la base de données démarré - derby.database.classpath = ''
+----------------------------------------------------------------
+Tue Dec 13 23:24:40 CET 2016:
+Fermeture de l'instance a65c80ac-0158-fa47-f00d-00000d99467b sur le répertoire de base de données D:\NetBeansProjects\DEVIR5_ATLj_BankEscapeGUI_Julax\BankEscapeDB avec le chargeur de classe sun.misc.Launcher$AppClassLoader@1d44bcfa 
+Tue Dec 13 23:24:40 CET 2016 Thread[DRDAConnThread_2,5,main] (DATABASE = BankEscapeDB), (DRDAID = {4}), Arrêt de la base de données 'BankEscapeDB'.
+----------------------------------------------------------------
+Tue Dec 13 23:25:48 CET 2016 : fermeture du moteur Derby
+----------------------------------------------------------------
